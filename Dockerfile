@@ -1,8 +1,8 @@
-FROM debian:stable
+FROM redhat/ubi8:latest
 
-RUN apt-get update && apt-get -y upgrade && \
-    apt-get install -y --no-install-recommends jq curl ca-certificates libssl1.0.* libunwind8 libicu-dev && \
-    apt-get purge --auto-remove
+RUN yum upgrade -y && \
+    yum install -y jq curl ca-certificates openssl openssl-devel libicu-devel && \
+    yum clean all
 
 COPY get-powershell.sh /root
 
