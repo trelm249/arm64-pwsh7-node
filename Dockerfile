@@ -87,5 +87,22 @@ RUN chmod a+x,o-w ${PS_INSTALL_FOLDER}/pwsh \
 
 # Use PowerShell as the default shell
 # Use array to avoid Docker prepending /bin/sh -c
-CMD [ "pwsh" ]
+#CMD [ "pwsh" ]
 
+SHELL [ "pwsh", "-Command" ]
+
+RUN \
+    # Sets values for a registered module repository
+    Set-PSRepository \
+      -ErrorAction Stop           <# Action to take if a command fails #> \
+      -InstallationPolicy Trusted <# Installation policy (Trusted, Untrusted) #> \
+      -Name PSGallery             <# Name of the repository #> \
+      -Verbose;                   <# Write verbose output #> \
+    # Install PSScriptAnalyzer module (https://github.com/PowerShell/PSScriptAnalyzer/tags)
+    Install-Module \
+      -ErrorAction Stop \
+      -Name PSScriptAnalyzer    <# Name of modules to install from the online gallery #> \
+      -RequiredVersion 1.20.0   <# Exact version of a single module to install #> \
+      -Verbose;
+
+CMD [ "pwsh" ]

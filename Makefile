@@ -1,4 +1,4 @@
-REPO     = {Some Repo}
+REPO     = trelm249
 IMAGE    = arm64-pwsh7-node
 VERSION  = $$(date +%Y%m%d)
 
