@@ -3,7 +3,7 @@ ARG imageRepo=debian
 FROM ${imageRepo}:stable-slim AS installer-env
 
 # Define Args for the needed to add the package
-ARG PS_VERSION=7.3.0
+ARG PS_VERSION=7.3.2
 ARG PS_ARCH=arm64
 ARG PS_PACKAGE=powershell-${PS_VERSION}-linux-${PS_ARCH}.tar.gz
 ARG PS_PACKAGE_URL=https://github.com/PowerShell/PowerShell/releases/download/v${PS_VERSION}/${PS_PACKAGE}
@@ -24,8 +24,8 @@ RUN tar zxf /tmp/linux.tar.gz -C ${PS_INSTALL_FOLDER}
 # Start a new stage so we lose all the tar.gz layers from the final image
 FROM ${imageRepo}:stable-slim
 
-ARG PS_VERSION=7.3.0-preview.8
-ARG PS_INSTALL_VERSION=7-preview
+ARG PS_VERSION=7.3.2
+ARG PS_INSTALL_VERSION=7
 
 # Copy only the files we need from the previous stage
 COPY --from=installer-env ["/opt/microsoft/powershell", "/opt/microsoft/powershell"]
